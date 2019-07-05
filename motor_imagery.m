@@ -50,7 +50,7 @@ x_input = ip * a;
 
 % Obtaining the output from y_train
 
-x_output = dataset.y_train(:,:);
+x_output = dataset.y_train(1:140,:);
 
 % Training the model
 
@@ -60,7 +60,7 @@ save('motor.mat');
 
 % Crossvalidation 
 
-Cmotor = crossval(motor,'KFold',3);
+Cmotor = crossval(motor,'KFold',10);
 c_out = kfoldPredict(Cmotor); 
 save('Cmotor.mat');
 
@@ -68,7 +68,7 @@ save('Cmotor.mat');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  T E S T I N G %%%%%%%%%%%%%%%%%%%%%%%%%
 
 % extracting data for testing
-data_test = data(:,:,1:28);
+data_test = data(:,:,113:140);
 
 for k = 1:28
  for i = 1:3
@@ -94,6 +94,29 @@ end
 
 x_test = ip_t *a;
 
-y_test = dataset.y_train(1:28,:);
+y_test = dataset.y_train(113:140,:);
+
+
+L =[];
+for i = 1:10
+    Compactmotor = Cmotor.Trained{i};
+    L(i) = loss(Compactmotor, x_test,y_test);
+end
+KFold_loss = kfoldLoss(Cmotor);
+disp(min(L));
+disp(max(L));
+a = sum(L)/10;
+disp(a);
+disp((min(L)+max(L))/2);
+disp(KFold_loss);
+disp('accuracy');
+disp((1-KFold_loss)*100);
+accuracy_model = (1-a)*100;
+
+
+disp('accuracy_model');
+disp(accuracy_model);
+
+
 
     
