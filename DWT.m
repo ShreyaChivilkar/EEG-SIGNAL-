@@ -1,5 +1,5 @@
 clc
-clear
+clr
 data_asc1 = load('C:\Users\DELL\Documents\NIC\20190625134617_Vaishnavi.easy') ;
 data_asc2 = load('C:\Users\DELL\Documents\NIC\20190625122739_Sayali.easy') ;
 data_asc3 = load('C:\Users\DELL\Documents\NIC\20190625121825_JuiPitale.easy') ;
